@@ -22,3 +22,17 @@ logger.info("정보 - 일반적인 정보메세지를 출력할 때는 info를 �
 logger.error("에러가 발생 했을때 사용")
 logger.warn("경고 ! = 주의가 필요할 때만 사용")
 logger.debug("디버그 ! - 개발중에만 사용")
+
+// 타임스탬프가 포함된 로그
+const simpleLogger = winston.createLogger ({
+  level : "info",
+  format: winston.format.combine(
+  winston.format.timestamp(),
+  winston.format.printf(({timestamp, level, message})=>{
+     return `${timestamp} [${level}] :${message}`;
+  })
+),
+  transports: [new winston.transports.Console() ],
+});
+
+simpleLogger.info("타임스탬프가 포함된 로그")
