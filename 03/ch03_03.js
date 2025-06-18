@@ -47,7 +47,7 @@ console.log(diffMonth+'개월');
 const s2 = moment();
 const christmas = moment("2025-12-25")
 const diffChristmas = christmas.diff(s2,"days")
-console.log("크리스마스까지 남은 일수: ", diffChristmas) 
+console.log("크리스마스까지 남은 일수: ", diffChristmas); 
 
 //결과 
 // 2025 년 06 월 18 일 에서 100일 후의 날짜는 2025 년 09 월 26 일

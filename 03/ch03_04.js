@@ -1,29 +1,17 @@
-// npm i validator 설치 :    "validator": "^13.15.15"
-const validator = require("validator")
 
-const email = "test@example.com"
-console.log(`이메일 검증 ${email}은 ${validator.isEmail(email)}`)
+// const password1 = "password123!"
+const password2 = "Password123!"
+// const v1 = validator.isStrongPassword(password1,{
+const v1 = validator.isStrongPassword(password2,{
+  minLength : 8,
+  minLowercase : 1,
+  minUppercase: 1,
+  minNumbers : 1,
+  minSymbols : 1,
+});
+// console.log(`비밀번호 ${password1} 은 ${v1}`);
+console.log(`비밀번호 ${password2} 은 ${v1}`);
+// 결과 : (대문자 빠짐)
+// 비밀번호 password123! 은 false
 
-// 이메일 검증 test@example.com!은 false 예제
-// const email = "test@example.com!" 
-// console.log(`이메일 검증 ${email}은 ${validator.isEmail(email)}`)
-
-const url = "www.naver.com"
-console.log(`url 검증 ${url}은 ${validator.isURL(url)}`)
-// url 검증 www.naver.com은 true
-
-const ip = "3.25.152.150"
-console.log(`ip 검증 ${ip}은 ${validator.isIP(ip)}`)
-//ip 검증 3.25.152.150은 true
-
-const phone = "010-555-6789"
-console.log(`phone 검증 ${phone}은 ${validator.isMobilePhone(phone,"ko-KR")}`)
-// phone 검증 010-555-6789은 true
-
-const num1 = "12345"
-console.log(`숫자검증 ${num1} ${validator.isNumeric(num1)}`)
-//숫자검증 12345 true
-
-const date1  = "2025-08-20"
-console.log(`날짜검증 ${date1} ${validator.isDate(date1)}`)
-// 날짜검증 2025-08-20 true
+//비밀번호 Password123! 은 true
