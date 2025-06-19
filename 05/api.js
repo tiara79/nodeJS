@@ -30,6 +30,8 @@ const create_sql = `
    count integer default 0
    ) `;
 db.exec(create_sql);
+
+// 게시판 정보 입력
 app.post("/posts",(req,res)=>{
   const {title, content, author } = req.body;
   let sql = `INSERT INTO posts(title, content, author) VALUES (?, ?, ?);`
@@ -37,6 +39,7 @@ app.post("/posts",(req,res)=>{
   res.status(201).json({message:"ok"});
 })
 
+// 게시판 전체 정보 조회
 app.get("/posts",(req,res)=>{
   let sql= `select id, title, content, author, createdAt from posts order by createdAt desc`
   // 쿼리를 준비
@@ -47,13 +50,24 @@ app.get("/posts",(req,res)=>{
   res.status(200).json({data: rows});
 })
 
-// 아이디 한개만 가져옴 http://localhost:3000/posts/3
+// 게시글 상세 조회 : 아이디 한개만 가져옴 http://localhost:3000/posts/3
 app.get("/posts/:id", (req,res)=>{
   const id = req.params.id;
   let sql = `select id, title,content,author, createdAt, count from posts where id = ?`;
   const stmt = db.prepare(sql);
   const post = stmt.get(id);
   res.status(200).json({data:post});
+})
+
+//게시글 수정 http://localhost:3000/posts/3
+app.put("/posts/:id",(req,res)=>{
+  const id = req.params.id;
+  const {title, content} = req.body;
+  let sql = `update posts set title =?,content=? where id=?`
+  const stmt = db.prepare(sql);
+  stmt.run(title, content, id) // 실제 쿼리로 데이터베이스 실행
+  res.redirect("/posts");
+  // res.json({message:"ok"})
 })
 
 //server start
