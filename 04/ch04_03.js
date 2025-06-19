@@ -20,7 +20,7 @@ app.get("/books",(req,res)=>{
 
 // ------------------------------- 매번 수정 후 서버 재시동
 
-// 책 id 없을 경우 , http://localhost:books/1, http://localhost:books/2
+// 책 id 쓰기 http://localhost:books/1, http://localhost:books/2
 app.get("/books/:id",(req,res)=>{
   const id= req.params.id; //문자열
   const book = books.find((b) => b.id === parseInt(id) ); // === 타입이랑 값이 동일
@@ -61,7 +61,7 @@ app.delete("/books/:id",(req,res) =>{
    const id = req.params.id;
     const index = books.findIndex((book)=> book.id === parseInt(id));
     if (index === -1){
-      return res.status(404).json({errow:"책을 찾을 수 없어요."})
+      return res.status(404).json({error:"책을 찾을 수 없어요."})
     }
     books.splice(index,1);
     res.status(204).send(); // 204 : No Content 요청은 성공, 보낼 것은 없음.
