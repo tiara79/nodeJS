@@ -41,8 +41,21 @@ app.post("/books", (req,res)=>{
   books.push(book);  //push 배열에 book 객체 추가
   res.status(201).json(book);
 })
+
+// 책 info 수정 , htrp://localhost:3000/books/1
+app.put("/books/:id",(req,res)=> {
+  const id= req.params.id;
+  const {title,author} =req.body;
+  const book = books.find((book) => book.id === parseInt(id));
+  if(!book){
+    return res.status(404).json({errow:"책을 찾을 수 없어요."})
+  }
+  book.title = title;
+  book.author = author;
+  res.json(book);
+});
+
 //라우터 연결
 app.listen(PORT,()=>{
   console.log(`서버가 http://localhost:${PORT}에서 실행중`);
 })
-
