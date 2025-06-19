@@ -55,6 +55,18 @@ app.put("/books/:id",(req,res)=> {
   res.json(book);
 });
 
+
+// 삭제
+app.delete("/books/:id",(req,res) =>{
+   const id = req.params.id;
+    const index = books.findIndex((book)=> book.id === parseInt(id));
+    if (index === -1){
+      return res.status(404).json({errow:"책을 찾을 수 없어요."})
+    }
+    books.splice(index,1);
+    res.status(204).send(); // 204 : No Content 요청은 성공, 보낼 것은 없음.
+})
+
 //라우터 연결
 app.listen(PORT,()=>{
   console.log(`서버가 http://localhost:${PORT}에서 실행중`);
