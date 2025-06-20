@@ -70,5 +70,14 @@ app.put("/posts/:id",(req,res)=>{
   // res.json({message:"ok"})
 })
 
+//
+app.delete("/posts/:id" ,(req,res) => {
+  const id = req.params.id;
+  let sql =`delete from posts where id = ?`
+  const stmt = db.prepare(sql); // 쿼리문 준비
+  stmt.run(id);
+  res.json({message:"ok"});
+})
+
 //server start
 app.listen(PORT,()=>{ });
