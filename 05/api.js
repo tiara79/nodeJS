@@ -70,7 +70,7 @@ app.put("/posts/:id",(req,res)=>{
   // res.json({message:"ok"})
 })
 
-//
+// 게시글 삭제 
 app.delete("/posts/:id" ,(req,res) => {
   const id = req.params.id;
   let sql =`delete from posts where id = ?`

@@ -33,7 +33,7 @@ const create_sql = `
    ) `;
 db.exec(create_sql);  //sql 쿼리를 실행 
 
-// 게시판 정보 입력 , http://localhost:3000/posts/의 POST 2번째 인자의 핸드러 함수 실행
+// 게시글 쓰기 , http://localhost:3000/posts/의 POST 2번째 인자의 핸들러 함수 실행
 app.post("/posts",(req,res)=>{
   const {title, content, author } = req.body;  // 요청 본문에서 title, content, author를 꺼내 body에서 json 포맷 형식으로 처리
   let sql = `INSERT INTO posts(title, content, author) VALUES (?, ?, ?);`  
