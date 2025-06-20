@@ -39,21 +39,24 @@ app.post("/posts",(req,res)=>{
   res.status(201).json({message:"ok"});
 })
 
-// 게시판 전체 정보 조회
+// 전체 게시글의 5개 목록 조회 : PageNation , http://localhost:3000/posts?page=2 GET
 app.get("/posts",(req,res)=>{
-  let sql= `select id, title, content, author, createdAt from posts order by createdAt desc`
-  // 쿼리를 준비
+  const page = req.query.page ? parseInt(req.query.page) :1;
+  const limit =5;
+  const offset = (page -1) *limit;
+  let sql = `
+     select id, title, author, createdAt , count from posts order by createdAt desc limit? offset?
+  `;
   const stmt = db.prepare(sql);
-  // 쿼리를 날림
-  const rows = stmt.all();
+  const rows = stmt.all(limit, offset);
   console.log(rows);
   res.status(200).json({data: rows});
-})
+});
 
 // 게시글 상세 조회 : 아이디 한개만 가져옴 http://localhost:3000/posts/3
 app.get("/posts/:id", (req,res)=>{
   const id = req.params.id;
-  let sql = `select id, title,content,author, createdAt, count from posts where id = ?`;
+  let sql = `select id, title,content, author, createdAt, count from posts where id = ?`;
   const stmt = db.prepare(sql);
   const post = stmt.get(id);
   res.status(200).json({data:post});
