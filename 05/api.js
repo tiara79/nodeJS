@@ -57,6 +57,8 @@ app.get("/posts",(req,res)=>{
 app.get("/posts/:id", (req,res)=>{
   const id = req.params.id;
   let sql = `select id, title,content, author, createdAt, count from posts where id = ?`;
+  let ac_sql = `update posts set count = count+1 where id =? `;
+  db.prepare(ac_sql).run(id);
   const stmt = db.prepare(sql);
   const post = stmt.get(id);
   res.status(200).json({data:post});
