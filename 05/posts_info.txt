@@ -76,9 +76,9 @@ app.put("/posts/:id",(req,res)=>{  // 수정할 id,content
   let sql = `update posts set title =?,content=? where id=?`
   const stmt = db.prepare(sql); // stmt 쿼리문 준비
   stmt.run(title, content, id) // 실제 쿼리로 데이터베이스 실행(run) // 주의 : ?의 갯수와 순서는 일치해야 함
-  res.redirect("/posts");  // run 후에는 전체 목록 가져오기
-  // res.json({message:"ok"})   
-
+  //res.redirect("/posts");  // run 후에는 전체 목록 가져오기
+res.json({message:"ok"})   
+})
 
 app.delete("/posts/:id" ,(req,res) => {
   const id = req.params.id; // 삭제할 게시글 아이디 가져옴
