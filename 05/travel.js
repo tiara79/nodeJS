@@ -48,14 +48,21 @@ app.get("/travels/:id",(req,res)=>{
  res.status(200).json({data:travels});
 })
 
-app.put("/travels/:id",(req,res)=>{
-   const id = req.params.id;
-   const {category, item, amount } = req.body;
-   let sql = `UPDATE travels SET category = ?, item = ? , amount = ? WHERE id = ?`;
-   const stmt = db.prepare(sql);
-   stmt.run(category, item, amount,id)
-   res.json({message:"travels update ok"})
-})
+app.put("/travels/:id", (req, res) => {
+  const id = req.params.id;
+
+  // checkyn이 1이면 0으로, 0이면 1로 토글
+  db.prepare(`
+    UPDATE travels 
+    SET checkyn = CASE checkyn WHEN 1 THEN 0 ELSE 1 END 
+    WHERE id = ?
+  `).run(id);
+
+  // 업데이트된 항목 조회
+  const item = db.prepare(`SELECT * FROM travels WHERE id = ?`).get(id);
+
+  res.status(200).json({ message: "ok", data: item });
+});
 
 app.delete("/travels/:id",(req,res)=>{
   const id = req.params.id;
