@@ -60,7 +60,7 @@ app.delete("/todos/:id", async(req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Todo 서버거 http://localhost:${PORT} 에서 실행중`);
+  console.log(`Todo 서버가 http://localhost:${PORT} 에서 실행중`);
   models.sequelize
     .sync({ force: false })
     .then(() => {

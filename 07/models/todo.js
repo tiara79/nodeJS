@@ -2,6 +2,7 @@
 // npm init -y  
 // npm i express nodemon sequelize sequelize-cli sqlite3
 // npx sequelize-cli init
+// 실행 npx nodemon todos.js
 
 // 폴더안 config.json 변경 
   //  {
