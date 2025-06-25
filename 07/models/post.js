@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "Post",
     {
       title: DataTypes.STRING,
-      conent: DataTypes.STRING,
+      content: DataTypes.STRING,
       fileName: {
         type: DataTypes.STRING,
         allowNull: true,
