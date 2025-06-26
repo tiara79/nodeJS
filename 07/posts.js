@@ -30,12 +30,13 @@ app.post("/posts", async (req, res) => {
   res.status(201).json({ message: "ok", data: post });
 });
 
-
+// 게시글 가져오기
   app.get("/posts", async (req, res) => {
     const posts = await models.Post.findAll();
     res.status(200).json({ message: "get all, ok", data: posts });
   });
   
+// 게시글 1개 가져오기
   app.get("/posts/:id",async (req, res) => {
     const id = req.params.id;
     const post = await models.Post.findByPk(id);
@@ -74,6 +75,7 @@ app.put("/posts/:id", async (req, res) => {
     }
   });
 
+// 댓글 쓰기  
 app.post("/posts/:postId/comments", async (req, res) => {
   const postId = req.params.postId;
   const { content } = req.body;
@@ -82,7 +84,7 @@ app.post("/posts/:postId/comments", async (req, res) => {
   if (!post) {
     return res.status(404).json({ message: "post not found" });
   }
-  // 1.5 사용자 추가
+  // 2. 사용자 추가
   let user = await models.User.findOne({
     where: { email: "b@example.com" },
   });
@@ -93,7 +95,7 @@ app.post("/posts/:postId/comments", async (req, res) => {
       password: "12345678",
     });
   }
-  // 2. comment 추가
+  // 3. comment 추가
   const comment = await models.Comment.create({
     content: content,
     postId: postId,
@@ -114,6 +116,56 @@ app.get("/posts/:postId/comments", async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
   res.status(200).json({ message: "ok", data: comments });
+});
+
+// 댓글 수정
+app.put("/posts/:postId/comments/:id", async (req, res) => {
+  const postId = req.params.postId;
+  const commentId = req.params.id;
+  const { content } = req.body;
+ // 1. 게시물이 있는지 확인
+  const post = await models.Post.findByPk(postId);
+  if (!post) {
+    return res.status(404).json({ message: "post not found" });
+  }
+  // 2. 댓글을 가지고 오기
+  const comment = await models.Comment.findOne({
+    where: {
+      id: commentId,
+      postId: postId,
+    },
+  });
+  if (!comment) {
+    return res.status(404).json({ message: "commment not found" });
+  }
+  // 3. 댓글 수정 및 저장
+  if (content) comment.content = content;
+  await comment.save();
+  res.status(200).json({ message: "ok", data: comment });
+});
+
+// 댓글 삭제
+app.delete("/posts/:postId/comments/:id", async (req, res) => {
+  const postId = req.params.postId;
+  const commentId = req.params.id;
+
+  // 1. 게시물 존재확인
+  const post = await models.Post.findByPk(postId);
+  if (!post) {
+    return res.status(404).json({ message: " post not found" });
+  }
+  // 2. 댓글 삭제
+  const result = await models.Comment.destroy({
+    where: {
+      id: commentId,
+      postId: postId,
+    },
+  });
+  if (result > 0) {
+    res.status(204).send();
+  } else {
+    res.status(404).json({ message: "comment not found" });
+  }
 });
 
 // add route
