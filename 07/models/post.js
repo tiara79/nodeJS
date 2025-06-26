@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      attachments:{
+        type: DataTypes.JSON, //여러 파일 정보를 JSON 으로 저장
+        allowNull: true,
+        defaultValue: [],
+      },
     },
     {
       tableName: "posts",
