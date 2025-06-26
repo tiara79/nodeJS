@@ -1,3 +1,4 @@
+// posts.js
 // POST/COMMENT 전용 REST ENDPOINT
 const express = require("express");
 const models = require("./models");
