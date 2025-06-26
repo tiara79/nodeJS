@@ -1,10 +1,17 @@
 // posts.js
 // POST/COMMENT 전용 REST ENDPOINT
+// 설치 : npm i multer (파일첨부)
 const express = require("express");
 const models = require("./models");
+// 멀터 임포트
+const multer = require("multer")
+
 const app = express();
 const PORT = 3000;
+
 app.use(express.json());
+// formdata, multi part forma 데이터를 받기 위한 미들웨어 설정
+app.use(express.urlencoded({extended: trus}))
 
 // route add
 app.post("/posts", async (req, res) => {
@@ -151,8 +158,9 @@ app.delete("/posts/:postId/comments/:id", async (req, res) => {
 
   // 1. 게시물 존재확인
   const post = await models.Post.findByPk(postId);
-  if (!post) {
-    return res.status(404).json({ message: " post not found" });
+  console.log(`존재 확인 : ${post}`)
+  if (!post || post < 1){
+    return res.status(404).json({ message: "post not found" });
   }
   // 2. 댓글 삭제
   const result = await models.Comment.destroy({
@@ -161,6 +169,7 @@ app.delete("/posts/:postId/comments/:id", async (req, res) => {
       postId: postId,
     },
   });
+  console.log(`존재 확인 : ${result}`)
   if (result > 0) {
     res.status(204).send();
   } else {
