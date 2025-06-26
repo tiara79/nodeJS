@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
   filename : function(req,file, cb) {
     // (file.originlname.name: aa ) - 178102981 .png 
     // => 파일 이름 유니크 하게 설정 하는 방법 fname  = aa-178102981.png 
-    const fname = path.parse(file.originalname) + "-" + Date.now()+ path.extname(file.originalname);
+    const fname = path.parse(file.originalname).name + "-" + Date.now()+ path.extname(file.originalname);
     cb (null, fname)
   }
 })
@@ -56,7 +56,7 @@ app.post("/posts",upload.single("file"), async (req, res) => {
     title: title,
     content: content,
     authorId: user.id,
-    filename : filename,
+    fileName : filename,
   });
   res.status(201).json({ message: "ok", data: post });
 });
