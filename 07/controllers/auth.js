@@ -2,7 +2,7 @@
 // npm i bcryptjs
 // npm i jsonwebtoken
 
-const models = require("./models");
+const models = require("../models");
 const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {

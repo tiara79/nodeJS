@@ -13,7 +13,6 @@ const createUser = async (req, res) => {
 };
 
 const findAll = async (req, res) => {
-  const users = await models.User.findAll();
   res.status(200).json({ message: "ok", data: users });
 };
 // PUT http://localhost:3000/users/12
