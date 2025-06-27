@@ -36,7 +36,7 @@ const login = async (req,res) =>{
     return res.status(400).json({message:"invalid email and password"})
   }
  // 4. 정당한 사용자(이메일과 비밀번호가 일치하면) 임시허가증 발급
-  const accessToken = generateAccessToken();
+  const accessToken = generateAccessToken(user);
   res.json({message:"ok", accessToken: accessToken})
 }
 
