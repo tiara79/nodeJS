@@ -1,3 +1,4 @@
+// 로그인 -> 토큰 정보 저장-> / (app.js)로 이동  -> 게시판 page
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +38,7 @@ function Login({ setIsAuthenticated, setUser }) {
       if (!response.ok) {
         throw new Error(data.message || "로그인에 실패했습니다.");
       }
-
+      
       localStorage.setItem("token", data.accessToken);
       localStorage.setItem("user", JSON.stringify(data.user));
       setIsAuthenticated(true);
