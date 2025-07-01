@@ -43,7 +43,7 @@ function PostDetail({ isAuthenticated, user }) {
       if (!response.ok) {
         throw new Error(data.message || "댓글을 불러오는데 실패했습니다.");
       }
-
+      console.log(data);
       setComments(data.data || []);
     } catch (err) {
       console.error("댓글을 불러오는 중 오류가 발생했습니다:", err);
@@ -239,14 +239,14 @@ function PostDetail({ isAuthenticated, user }) {
                 <div key={comment.id} className="list-group-item">
                   <div className="d-flex justify-content-between">
                     <div>
-                      <strong>{comment.author}</strong>
+                      <strong>{comment.author.name}</strong>
                       <small className="text-muted ms-2">
                         {new Date(comment.createdAt).toLocaleString()}
                       </small>
                     </div>
                     {isAuthenticated &&
                       user &&
-                      comment.authorId === user.id && (
+                      comment.author.id === user.id && (
                         <button
                           onClick={() => handleCommentDelete(comment.id)}
                           className="btn btn-sm btn-danger"
